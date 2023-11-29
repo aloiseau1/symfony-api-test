@@ -33,9 +33,9 @@ class WeatherClient
         return $this->execute(sprintf('/VisualCrossingWebServices/rest/services/timeline/%s', $location), WeatherResponse::class, $query);
     }
 
-    private function execute(string $baseUri, ?string $responseType = null, ?array $query = [], ?array $options = []): mixed
+    private function execute(string $baseUri, ?string $responseType = null, ?array $query = [], ?array $headers = []): mixed
     {
-        $defaultOptions = [
+        $options = [
             'base_uri' => $this->apiurl,
             'headers' => [
                 'Accept' => 'application/json'
@@ -46,10 +46,13 @@ class WeatherClient
         ];
 
         if ($query) {
-            $defaultOptions['query'] = array_merge($defaultOptions['query'], $query);
+            $options['query'] = array_merge($options['query'], $query);
         }
 
-        $options = array_merge($defaultOptions, $options);
+        if ($headers) {
+            $options['headers'] = array_merge($options['headers'], $query);
+        }
+
         $response = $this->httpClient->request('GET', $baseUri, $options);
 
         if ($responseType) {
