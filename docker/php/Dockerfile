@@ -1,28 +1,40 @@
-FROM php:8.2-rc-fpm
+FROM php:8.2-fpm
 
-RUN apt-get update && \
-    apt-get upgrade -y
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    zlib1g-dev \
+    libxml2-dev \
+    libpng-dev \
+    libzip-dev \
+    vim curl debconf subversion git apt-transport-https apt-utils \
+    build-essential locales acl mailutils wget nodejs zip unzip \
+    gnupg gnupg1 gnupg2 \
+    sudo \
+    ssh \
+    && docker-php-ext-install \
+    pdo_mysql \
+    soap \
+    zip \
+    opcache \
+    gd \
+    intl
 
-#install some basic tools
-RUN apt-get install -y \
-        git \
-        tree \
-        vim \
-        wget \
-        zlib1g-dev \
-        zip \
-        subversion
+COPY opcache.ini /usr/local/etc/php/conf.d/
+COPY custom.ini /usr/local/etc/php/conf.d/
 
-RUN apt-get update \
-    && apt-get install -qq -y --no-install-recommends \
-    cron \
-     vim \
-     locales coreutils apt-utils git libicu-dev g++ libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev;
-
-RUN docker-php-ext-install pdo pdo_mysql zip 
-
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
+RUN wget --no-check-certificate https://phar.phpunit.de/phpunit-6.5.3.phar && \
+    mv phpunit*.phar phpunit.phar && \
+    chmod +x phpunit.phar && \
+    mv phpunit.phar /usr/local/bin/phpunit
+RUN usermod -u 1000 www-data
+RUN usermod -a -G www-data root
+RUN mkdir -p /var/www
+RUN chown -R www-data:www-data /var/www
+RUN mkdir -p /var/www/.composer
+RUN chown -R www-data:www-data /var/www/.composer
+RUN mkdir -p var/cache/prod var/cache/dev var/cache/test var/log \
+   && chown -R www-data:www-data var/ \
+   && chmod -R ug+rwX var/
 WORKDIR /var/www/

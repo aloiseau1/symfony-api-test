@@ -1,18 +1,20 @@
 version: '3'
 services:
     web:
-        image: nginx:latest
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
         ports:
-            - "80:80"
+            - "10302:80"
         volumes:
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-            - ./app:/app
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/nginx.conf
+            - ./app:/var/www
         links:
             - php
     php:
         build:
-            context: .
-            dockerfile: ./docker/php/Dockerfile
+            context: ./docker/php
+            dockerfile: Dockerfile
         volumes:
             - ./app:/var/www
         links:
