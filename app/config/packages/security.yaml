@@ -18,6 +18,10 @@ security:
                 check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        me:
+            pattern:   ^/api/users/me
+            stateless: true
+            custom_authenticator: App\Security\ApiAuthenticator
         api:
             pattern:   ^/api
             stateless: true
@@ -40,6 +44,8 @@ security:
     access_control:
         - { path: ^/api/users/register, roles: PUBLIC_ACCESS  }
         - { path: ^/api/login, roles: PUBLIC_ACCESS  }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS  }
+        - { path: ^/api/doc, roles: PUBLIC_ACCESS  }
         - { path: ^/api, roles: ROLE_USER }
 
 when@test:

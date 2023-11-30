@@ -7,6 +7,8 @@ parameters:
     weather.apikey: '%env(WEATHER_API_KEY)%'
     weather.url: '%env(WEATHER_API_URL)%'
     geogouv.url: '%env(GEO_GOUV_API_URL)%'
+    insee.apikey: '%env(INSEE_API_KEY)%'
+    insee.url: '%env(INSEE_API_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -29,6 +31,10 @@ services:
     App\Client\GeogouvClient:
         arguments:
             $apiurl: '%geogouv.url%'
+    App\Client\InseeClient:
+        arguments:
+            $apikey: '%insee.apikey%'
+            $apiurl: '%insee.url%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
