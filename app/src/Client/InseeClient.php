@@ -30,7 +30,7 @@ class InseeClient
         return $this->execute('GET', sprintf('/entreprises/sirene/V3/siren/%s', $siren), InseeSirenResponse::class);
     }
 
-    private function execute(string $method, string $baseUri, ?string $responseType = null, ?array $query = [], ?array $headers = []): mixed
+    private function execute(string $method, string $uri, ?string $responseType = null, ?array $query = [], ?array $headers = []): mixed
     {
         $options = [
             'base_uri' => $this->apiurl,
@@ -49,7 +49,7 @@ class InseeClient
             $options['headers'] = array_merge($options['headers'], $query);
         }
 
-        $response = $this->httpClient->request($method, $baseUri, $options);
+        $response = $this->httpClient->request($method, $uri, $options);
 
         if ($responseType) {
             return $this->serializer->deserialize($response->getContent(), $responseType, 'json');

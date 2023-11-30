@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Client\GeogouvClient;
 use App\Client\InseeClient;
-use App\Entity\Commune;
 use App\Entity\Response\Insee\InseeSirenResponse;
 
 class InseeService

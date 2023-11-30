@@ -46,7 +46,7 @@ class GeogouvClient
         return $this->execute('GET', '/communes', sprintf('%s[]', Commune::class));
     }
 
-    private function execute(string $method, string $baseUri, ?string $responseType = null, ?array $query = [], ?array $headers = []): mixed
+    private function execute(string $method, string $uri, ?string $responseType = null, ?array $query = [], ?array $headers = []): mixed
     {
         $options = [
             'base_uri' => $this->apiurl,
@@ -64,7 +64,7 @@ class GeogouvClient
             $options['headers'] = array_merge($options['headers'], $query);
         }
 
-        $response = $this->httpClient->request($method, $baseUri, $options);
+        $response = $this->httpClient->request($method, $uri, $options);
 
         if ($responseType) {
             return $this->serializer->deserialize($response->getContent(), $responseType, 'json');

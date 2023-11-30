@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Client\InseeClient;
 use App\Entity\User;
 use App\Service\InseeService;
 use Doctrine\ORM\EntityManagerInterface;
