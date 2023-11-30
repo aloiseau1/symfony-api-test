@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetController extends AbstractController
+class WeatherGetController extends AbstractController
 {
     private WeatherService $weatherService;
 

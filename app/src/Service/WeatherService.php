@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Client\WeatherClient;
-use App\Entity\Response\WeatherResponse as WeatherResponse;
+use App\Entity\Response\Weather\WeatherResponse as WeatherResponse;
 
 class WeatherService
 {

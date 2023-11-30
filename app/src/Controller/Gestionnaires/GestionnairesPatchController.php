@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PatchController extends AbstractController
+class GestionnairesPatchController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
     private SerializerInterface $serializer;

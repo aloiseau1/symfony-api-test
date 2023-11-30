@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\Response;
+namespace App\Entity\Response\Weather;
 
 class WeatherDaysResponse
 {

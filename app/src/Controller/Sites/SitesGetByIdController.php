@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetController extends AbstractController
+class SitesGetByIdController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
@@ -18,12 +18,12 @@ class GetController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/sites', name: 'app_sites_get', methods: ['GET'])]
-    public function __invoke(): JsonResponse
+    #[Route('/sites/{id}', name: 'app_sites_get_by_id', methods: ['GET'])]
+    public function __invoke(int $id): JsonResponse
     {
         $siteRepository = $this->entityManager->getRepository(Site::class);
-        $sites = $siteRepository->findAll();
+        $siteData = $siteRepository->find($id);
 
-        return $this->json($sites);
+        return $this->json($siteData);
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PostController extends AbstractController
+class BadgesPostController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 

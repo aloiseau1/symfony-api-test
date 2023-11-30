@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetController extends AbstractController
+class GestionnairesGetController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
 
