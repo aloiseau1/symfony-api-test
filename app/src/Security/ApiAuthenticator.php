@@ -46,6 +46,18 @@ class ApiAuthenticator extends AbstractAuthenticator
             throw new CustomUserMessageAuthenticationException('Token invalid');
         }
 
+        if ($request->headers->get('X-AUTH-USERNAME')) {
+            $apiUsername = $request->headers->get('X-AUTH-USERNAME');
+
+            return new SelfValidatingPassport(new UserBadge($apiUsername, function (string $userIdentifier): ?User {
+                $user = new User();
+                $user->setEmail($userIdentifier);
+                $user->setRoles(['ROLE_USER']);
+                $user->setType('symfony');
+                return $user;
+            }));
+        }
+
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->find(1);
 
