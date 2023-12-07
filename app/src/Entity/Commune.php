@@ -21,14 +21,12 @@ use App\Controller\Communes\CommunesGetController;
             uriTemplate: '/communes/zipcode/{zipcode}',
             controller: CommunesGetByZipCodeController::class,
             read: false,
-            write: false,
             name: 'app_communes_get_by_zip_code'
         ),
         new GetCollection(
             uriTemplate: '/communes',
             controller: CommunesGetController::class,
             read: false,
-            write: false,
             name: 'app_communes_get'
         ),
     )

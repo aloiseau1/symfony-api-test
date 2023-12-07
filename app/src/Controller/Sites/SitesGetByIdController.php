@@ -3,27 +3,31 @@
 namespace App\Controller\Sites;
 
 use App\Entity\Site;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
 
 class SitesGetByIdController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(
-        EntityManagerInterface $entityManager
-    ) {
-        $this->entityManager = $entityManager;
-    }
-
+    /**
+     * @OA\Response(
+     *      response=200,
+     *      description="Retourne un site",
+     *      @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(ref=@Model(type=Site::class))
+     *      )
+     *  )
+     *
+     * @OA\Tag(name="Site")
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
     #[Route('/sites/{id}', name: 'app_sites_get_by_id', methods: ['GET'])]
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(Site $site): JsonResponse
     {
-        $siteRepository = $this->entityManager->getRepository(Site::class);
-        $siteData = $siteRepository->find($id);
-
-        return $this->json($siteData);
+        return $this->json($site);
     }
 }

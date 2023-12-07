@@ -28,11 +28,8 @@ class GestionnairesPatchController extends AbstractController
     }
 
     #[Route('/gestionnaires/{id}', name: 'app_gestionnaires_patch', methods: ['PATCH'])]
-    public function __invoke(int $id, Request $request): Response
+    public function __invoke(Gestionnaire $gestionnaire, Request $request): Response
     {
-        $gestionnaireRepository = $this->entityManager->getRepository(Gestionnaire::class);
-        $gestionnaire = $gestionnaireRepository->find($id);
-
         $newGestionnaire = $this->serializer->deserialize($request->getContent(), Gestionnaire::class, 'json', ['object_to_populate' => $gestionnaire]);
 
         $errors = $this->validator->validate($newGestionnaire);

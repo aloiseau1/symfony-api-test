@@ -22,10 +22,10 @@ security:
             pattern:   ^/api/users/me
             stateless: true
             custom_authenticator: App\Security\ApiAuthenticator
-        api:
-            pattern:   ^/api
-            stateless: true
-            jwt: ~
+#        api:
+#            pattern:   ^/api
+#            stateless: true
+#            jwt: ~
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -46,7 +46,7 @@ security:
         - { path: ^/api/login, roles: PUBLIC_ACCESS  }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS  }
         - { path: ^/api/doc, roles: PUBLIC_ACCESS  }
-        - { path: ^/api, roles: ROLE_USER }
+#        - { path: ^/api, roles: ROLE_USER }
 
 when@test:
     security:

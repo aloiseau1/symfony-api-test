@@ -2,9 +2,9 @@
 
 namespace App\Controller\Communes;
 
-use App\Entity\Commune;
 use App\Service\CommuneService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\StreamedJsonResponse;
 
 class CommunesGetController extends AbstractController
 {
@@ -16,11 +16,12 @@ class CommunesGetController extends AbstractController
         $this->communeService = $communeService;
     }
 
-    /**
-     * @return Commune[]
-     */
-    public function __invoke(): array
+    public function __invoke(): StreamedJsonResponse
     {
-        return $this->communeService->getCommunes();
+        return new StreamedJsonResponse([
+            'embedded' => [
+                'default' => $this->communeService->getCommunes(),
+            ]
+        ]);
     }
 }

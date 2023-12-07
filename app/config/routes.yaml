@@ -1,9 +1,16 @@
-controllers:
+app.api:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
     prefix: /api
+
+app.view:
+    resource:
+        path: ../src/Controller/View
+        namespace: App\Controller\View
+    type: attribute
+    prefix: /
 
 app.swagger_ui:
     path: /api/doc

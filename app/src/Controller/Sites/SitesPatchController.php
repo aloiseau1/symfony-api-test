@@ -28,11 +28,8 @@ class SitesPatchController extends AbstractController
     }
 
     #[Route('/sites/{id}', name: 'app_sites_patch', methods: ['PATCH'])]
-    public function __invoke(int $id, Request $request): Response
+    public function __invoke(Site $site, Request $request): Response
     {
-        $siteRepository = $this->entityManager->getRepository(Site::class);
-        $site = $siteRepository->find($id);
-
         $newSite = $this->serializer->deserialize($request->getContent(), Site::class, 'json', ['object_to_populate' => $site]);
 
         $errors = $this->validator->validate($newSite);

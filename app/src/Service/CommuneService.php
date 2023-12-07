@@ -4,15 +4,19 @@ namespace App\Service;
 
 use App\Client\GeogouvClient;
 use App\Entity\Commune;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CommuneService
 {
     private GeogouvClient $geogouvClient;
+    private SerializerInterface $serializer;
 
     public function __construct(
-        GeogouvClient $geogouvClient
+        GeogouvClient $geogouvClient,
+        SerializerInterface $serializer
     ) {
         $this->geogouvClient = $geogouvClient;
+        $this->serializer = $serializer;
     }
 
     public function getCommuneByZipCode(string $zipCode): ?Commune
@@ -27,11 +31,18 @@ class CommuneService
         return $this->geogouvClient->fetchCommuneByCode($code);
     }
 
-    /**
-     * @return Commune[]
-     */
-    public function getCommunes(): array
+    public function getCommunes(): \Generator
     {
-        return $this->geogouvClient->fetchCommunes();
+        $communes = $this->geogouvClient->fetchCommunes();
+
+        $count = 0;
+        foreach ($communes  as $value) {
+            yield $this->serializer->normalize($value);
+
+            ++$count;
+            if ($count % 500 === 0) {
+                flush();
+            }
+        }
     }
 }

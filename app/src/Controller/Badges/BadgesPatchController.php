@@ -20,11 +20,8 @@ class BadgesPatchController extends AbstractController
     }
 
     #[Route('/badges/{id}', name: 'app_badges_patch', methods: ['PATCH'])]
-    public function __invoke(int $id, Request $request): JsonResponse
+    public function __invoke(Badge $badge, Request $request): JsonResponse
     {
-        $badgeRepository = $this->entityManager->getRepository(Badge::class);
-        $badge = $badgeRepository->find($id);
-
         $requestContent = $request->getContent();
         $request = json_decode($requestContent, true);
 
