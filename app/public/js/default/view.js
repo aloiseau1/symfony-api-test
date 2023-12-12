@@ -15,7 +15,7 @@ function startRequestPortes() {
         'comments': document.getElementById('comments').value,
         'version': parseInt(document.getElementById('version').value)
     }
-    console.log(params);
+
     const xhr = new XMLHttpRequest();
     let lastResponseLength = null;
     let response = null;

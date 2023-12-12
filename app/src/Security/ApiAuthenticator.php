@@ -40,11 +40,11 @@ class ApiAuthenticator extends AbstractAuthenticator
             throw new CustomUserMessageAuthenticationException('No API token provided');
         }
 
-        try {
-            $this->inseeService->getCompanyBySiren($apiToken);
-        } catch (\Exception $exception) {
-            throw new CustomUserMessageAuthenticationException('Token invalid');
-        }
+//        try {
+//            $this->inseeService->getCompanyBySiren($apiToken);
+//        } catch (\Exception $exception) {
+//            throw new CustomUserMessageAuthenticationException('Token invalid');
+//        }
 
         if ($request->headers->get('X-AUTH-USERNAME')) {
             $apiUsername = $request->headers->get('X-AUTH-USERNAME');
@@ -52,7 +52,7 @@ class ApiAuthenticator extends AbstractAuthenticator
             return new SelfValidatingPassport(new UserBadge($apiUsername, function (string $userIdentifier): ?User {
                 $user = new User();
                 $user->setEmail($userIdentifier);
-                $user->setRoles(['ROLE_USER']);
+                $user->setRoles(['ROLE_ADMIN']);
                 $user->setType('symfony');
                 return $user;
             }));
